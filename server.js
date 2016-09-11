@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;
 
-// Connect to the database before starting the application server. 
+// Connect to the database before starting the application server.
 mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
   if (err) {
     console.log(err);
@@ -49,7 +49,7 @@ app.get("/contacts", function(req, res) {
     if (err) {
       handleError(res, err.message, "Failed to get contacts.");
     } else {
-      res.status(200).json(docs);  
+      res.status(200).json(docs);
     }
   });
 });
@@ -57,6 +57,8 @@ app.get("/contacts", function(req, res) {
 app.post("/contacts", function(req, res) {
   var newContact = req.body;
   newContact.createDate = new Date();
+
+  console.log("Trying to POST a new contact");
 
   if (!(req.body.firstName || req.body.lastName)) {
     handleError(res, "Invalid user input", "Must provide a first or last name.", 400);
@@ -82,7 +84,7 @@ app.get("/contacts/:id", function(req, res) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
-      res.status(200).json(doc);  
+      res.status(200).json(doc);
     }
   });
 });

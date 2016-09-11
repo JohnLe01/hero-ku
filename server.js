@@ -1,3 +1,8 @@
+/*
+POST example
+curl -H "Content-Type: application/json" -d '{"firstName":"Chris", "lastName": "Chang", "email": "support@mlab.com"}' http://morning-badlands-24515.herokuapp.com/contacts
+*/
+
 var express = require("express");
 var path = require("path");
 var bodyParser = require("body-parser");
@@ -59,6 +64,13 @@ app.post("/contacts", function(req, res) {
   newContact.createDate = new Date();
 
   console.log("Trying to POST a new contact");
+  console.log("Request");
+  console.log("\n");
+  console.log(newContact)
+  console.log("\n");
+  console.log(newContact.firstName)
+  console.log("\n");
+  console.log(newContact.lastName)
 
   if (!(req.body.firstName || req.body.lastName)) {
     handleError(res, "Invalid user input", "Must provide a first or last name.", 400);

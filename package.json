@@ -1,7 +1,8 @@
 {
-  "name": "MEAN",
+  "name": "hero-ku",
   "version": "1.0.0",
-  "description": "A MEAN app that allows users to manage contact lists",
+  "description": "Playing around with heroku and web services.",
+  "license": "MIT",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

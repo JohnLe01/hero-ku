@@ -1,7 +1,7 @@
-# mean-contactlist
+# hero-ku
 
-Contact List is a RESTful API server and web application built with the MEAN stack. It is a simple example that aims to concisely demonstrate basic MEAN and REST architecture. You can find the full tutorial here: https://devcenter.heroku.com/articles/mean-apps-restful-api.
+A playground for working in [Heroku](https://www.heroku.com/).
 
-You can deploy a live copy of this application to Heroku with the button below.
+Currently being used to do diagnostics for the [FirstBuild](https://firstbuild.com/) [Opal Ice Maker](http://nuggetice.com/).
 
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy?template=https://github.com/chrisckchang/mean-contactlist)
+Baseline tutorial can be found [here](https://devcenter.heroku.com/articles/mean-apps-restful-api).

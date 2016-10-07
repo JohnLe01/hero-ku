@@ -72,8 +72,12 @@ app.post("/contacts", function(req, res) {
   console.log("\n");
   console.log(newContact.lastName)
 
-  if (req.body.firstName == null || req.body.lastName == null || req.body.email == null) {
+  if (req.body.firstName == null || req.body.lastName == null) {
     handleError(res, "Invalid user input", "Must provide a first or last name and email.", 400);
+  }
+
+  if(req.body.email == null) {
+    req.body.email = "blah@bleh.com";
   }
 
   db.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc) {

@@ -4,7 +4,7 @@ curl -H "Content-Type: application/json" -d '{"firstName":"Chris", "lastName": "
 */
 
 var express = require("express");
-var path = require("path");
+// var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
@@ -15,25 +15,16 @@ var app = express();
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
 
-// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
-var db;
-
 // Connect to the database before starting the application server.
-mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, database) {
+var database;
+mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, _database) {
   if (err) {
     console.log(err);
     process.exit(1);
   }
 
-  // Save database object from the callback for reuse.
-  db = database;
-  console.log("Database connection ready");
-
-  // Initialize the app.
-  var server = app.listen(process.env.PORT || 8080, function () {
-    var port = server.address().port;
-    console.log("App now running on port", port);
-  });
+  database = _database;
+  app.listen(process.env.PORT || 8080);
 });
 
 // CONTACTS API ROUTES BELOW
@@ -50,7 +41,7 @@ function handleError(res, reason, message, code) {
  */
 
 app.get("/contacts", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
+  database.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get contacts.");
     } else {
@@ -72,11 +63,15 @@ app.post("/contacts", function(req, res) {
   console.log("\n");
   console.log(newContact.lastName)
 
-  if (req.body.firstName == null || req.body.lastName == null || req.body.email == null) {
+  if (req.body.firstName == null || req.body.lastName == null) {
     handleError(res, "Invalid user input", "Must provide a first or last name and email.", 400);
   }
 
-  db.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc) {
+  if(req.body.email == null) {
+    req.body.email = "blah@bleh.com";
+  }
+
+  database.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new contact.");
     } else {
@@ -92,7 +87,7 @@ app.post("/contacts", function(req, res) {
  */
 
 app.get("/contacts/:id", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  database.collection(CONTACTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
@@ -105,7 +100,7 @@ app.put("/contacts/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  db.collection(CONTACTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  database.collection(CONTACTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -115,7 +110,7 @@ app.put("/contacts/:id", function(req, res) {
 });
 
 app.delete("/contacts/:id", function(req, res) {
-  db.collection(CONTACTS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  database.collection(CONTACTS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete contact");
     } else {

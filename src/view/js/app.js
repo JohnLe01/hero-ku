@@ -1,4 +1,4 @@
-angular.module("contactsApp", ['ngRoute'])
+angular.module("1B-Diagnostics", ['ngRoute'])
     .config(function($routeProvider) {
         $routeProvider
             .when("/", {

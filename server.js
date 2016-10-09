@@ -9,10 +9,10 @@ var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
 
-var CONTACTS_COLLECTION = "contacts";
+var 1B_DIAGNOSTICS = "1B-diagnostics";
 
 var app = express();
-app.use(express.static(__dirname + "/src/public"));
+app.use(express.static(__dirname + "/src/view"));
 app.use(bodyParser.json());
 
 // Connect to the database before starting the application server.
@@ -41,7 +41,7 @@ function handleError(res, reason, message, code) {
  */
 
 app.get("/contacts", function(req, res) {
-  database.collection(CONTACTS_COLLECTION).find({}).toArray(function(err, docs) {
+  database.collection(1B_DIAGNOSTICS).find({}).toArray(function(err, docs) {
     if (err) {
       handleError(res, err.message, "Failed to get contacts.");
     } else {
@@ -71,7 +71,7 @@ app.post("/contacts", function(req, res) {
     req.body.email = "blah@bleh.com";
   }
 
-  database.collection(CONTACTS_COLLECTION).insertOne(newContact, function(err, doc) {
+  database.collection(1B_DIAGNOSTICS).insertOne(newContact, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to create new contact.");
     } else {
@@ -87,7 +87,7 @@ app.post("/contacts", function(req, res) {
  */
 
 app.get("/contacts/:id", function(req, res) {
-  database.collection(CONTACTS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  database.collection(1B_DIAGNOSTICS).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to get contact");
     } else {
@@ -100,7 +100,7 @@ app.put("/contacts/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  database.collection(CONTACTS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  database.collection(1B_DIAGNOSTICS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
     if (err) {
       handleError(res, err.message, "Failed to update contact");
     } else {
@@ -110,7 +110,7 @@ app.put("/contacts/:id", function(req, res) {
 });
 
 app.delete("/contacts/:id", function(req, res) {
-  database.collection(CONTACTS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  database.collection(1B_DIAGNOSTICS).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
       handleError(res, err.message, "Failed to delete contact");
     } else {

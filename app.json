@@ -1,8 +1,8 @@
 {
-  "name": "MEAN Contact List Example",
-  "description": "A MEAN app that allows users to manage a contact list.",
-  "repository": "https://github.com/chrisckchang/mean-contactlist",
-  "logo": "https://mlab.com/company/brand/resources/mLab-logo-onlight.png",
+  "name": "hero-ku",
+  "description": "Playing with heroku to learn web services stuff.",
+  "repository": "https://github.com/gvela024/hero-ku",
+  "logo": "",
   "keywords": ["node", "express", "angular", "MEAN", "mongodb", "REST", "API"],
   "addons": ["mongolab"]
 }

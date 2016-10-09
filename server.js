@@ -12,7 +12,7 @@ var ObjectID = mongodb.ObjectID;
 var CONTACTS_COLLECTION = "contacts";
 
 var app = express();
-app.use(express.static(__dirname + "/public"));
+app.use(express.static(__dirname + "/src/public"));
 app.use(bodyParser.json());
 
 // Connect to the database before starting the application server.

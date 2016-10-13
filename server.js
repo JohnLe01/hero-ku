@@ -62,7 +62,7 @@ app.post("/devices", function(req, res) {
   //   }
   // });
 
-  res.status(201).json(newContact);
+  res.status(201).json("");
 });
 
 /*  "/contacts/:id"

@@ -1,6 +1,6 @@
 /*
 POST example
-curl -H "Content-Type: application/json" -d '{"firstName":"Chris", "lastName": "Chang", "email": "support@mlab.com"}' http://morning-badlands-24515.herokuapp.com/contacts
+curl -H "Content-Type: application/json" -d '{"firstName":"Chris", "lastName": "Chang", "email": "support@mlab.com"}' http://morning-badlands-24515.herokuapp.com/devices
 */
 
 var express = require("express");
@@ -62,6 +62,7 @@ app.post("/devices", function(req, res) {
   //     res.status(201).json(doc.ops[0]);
   //   }
   // });
+  res.status(201).json(doc.ops[0]); // should probably nuke this when your done.
 });
 
 /*  "/contacts/:id"

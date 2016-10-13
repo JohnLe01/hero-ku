@@ -52,7 +52,6 @@ app.post("/devices", function(req, res) {
 
   console.log("Trying to POST a new device");
   console.log("Request");
-  console.log("\n");
   console.log(newContact);
 
   // database.collection(FIRSTBUILD_DIAGNOSTICS).insertOne(newContact, function(err, doc) {
@@ -62,7 +61,7 @@ app.post("/devices", function(req, res) {
   //     res.status(201).json(doc.ops[0]);
   //   }
   // });
-  res.status(201).json(doc.ops[0]); // should probably nuke this when your done.
+  res.status(201); // should probably nuke this when your done.
 });
 
 /*  "/contacts/:id"

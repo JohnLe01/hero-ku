@@ -53,27 +53,15 @@ app.post("/devices", function(req, res) {
   console.log("Trying to POST a new device");
   console.log("Request");
   console.log("\n");
-  console.log(newContact)
-  console.log("\n");
-  console.log(newContact.firstName)
-  console.log("\n");
-  console.log(newContact.lastName)
+  console.log(newContact);
 
-  if (req.body.firstName == null || req.body.lastName == null) {
-    handleError(res, "Invalid user input", "Must provide a first or last name and email.", 400);
-  }
-
-  if (req.body.email == null) {
-    req.body.email = "blah@bleh.com";
-  }
-
-  database.collection(FIRSTBUILD_DIAGNOSTICS).insertOne(newContact, function(err, doc) {
-    if (err) {
-      handleError(res, err.message, "Failed to create new device.");
-    } else {
-      res.status(201).json(doc.ops[0]);
-    }
-  });
+  // database.collection(FIRSTBUILD_DIAGNOSTICS).insertOne(newContact, function(err, doc) {
+  //   if (err) {
+  //     handleError(res, err.message, "Failed to create new device.");
+  //   } else {
+  //     res.status(201).json(doc.ops[0]);
+  //   }
+  // });
 });
 
 /*  "/contacts/:id"

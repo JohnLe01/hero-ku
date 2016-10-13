@@ -24,7 +24,7 @@ angular.module("1B-Diagnostics", ['ngRoute'])
     })
     .service("Contacts", function($http) {
         this.getContacts = function() {
-            return $http.get("/contacts").
+            return $http.get("/devices").
                 then(function(response) {
                     return response;
                 }, function(response) {
@@ -32,7 +32,7 @@ angular.module("1B-Diagnostics", ['ngRoute'])
                 });
         }
         this.createContact = function(contact) {
-            return $http.post("/contacts", contact).
+            return $http.post("/devices", contact).
                 then(function(response) {
                     return response;
                 }, function(response) {
@@ -40,7 +40,7 @@ angular.module("1B-Diagnostics", ['ngRoute'])
                 });
         }
         this.getContact = function(contactId) {
-            var url = "/contacts/" + contactId;
+            var url = "/devices/" + contactId;
             return $http.get(url).
                 then(function(response) {
                     return response;
@@ -49,7 +49,7 @@ angular.module("1B-Diagnostics", ['ngRoute'])
                 });
         }
         this.editContact = function(contact) {
-            var url = "/contacts/" + contact._id;
+            var url = "/devices/" + contact._id;
             console.log(contact._id);
             return $http.put(url, contact).
                 then(function(response) {
@@ -60,7 +60,7 @@ angular.module("1B-Diagnostics", ['ngRoute'])
                 });
         }
         this.deleteDeviceLog = function(contactId) {
-            var url = "/contacts/" + contactId;
+            var url = "/devices/" + contactId;
             return $http.delete(url).
                 then(function(response) {
                     return response;

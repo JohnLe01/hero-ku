@@ -61,7 +61,8 @@ app.post("/devices", function(req, res) {
   //     res.status(201).json(doc.ops[0]);
   //   }
   // });
-  res.status(201); // should probably nuke this when your done.
+
+  res.status(201).json(newContact);
 });
 
 /*  "/contacts/:id"

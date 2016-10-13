@@ -54,15 +54,15 @@ app.post("/devices", function(req, res) {
   console.log("Request");
   console.log(newContact);
 
-  // database.collection(FIRSTBUILD_DIAGNOSTICS).insertOne(newContact, function(err, doc) {
-  //   if (err) {
-  //     handleError(res, err.message, "Failed to create new device.");
-  //   } else {
-  //     res.status(201).json(doc.ops[0]);
-  //   }
-  // });
+  database.collection(FIRSTBUILD_DIAGNOSTICS).insertOne(newContact, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to create new device.");
+    } else {
+      res.status(201).json(doc.ops[0]);
+    }
+  });
 
-  res.status(201).json("");
+  // res.status(201).json("");
 });
 
 /*  "/contacts/:id"

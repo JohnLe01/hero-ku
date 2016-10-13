@@ -59,7 +59,7 @@ angular.module("1B-Diagnostics", ['ngRoute'])
                     console.log(response);
                 });
         }
-        this.deleteContact = function(contactId) {
+        this.deleteDeviceLog = function(contactId) {
             var url = "/contacts/" + contactId;
             return $http.delete(url).
                 then(function(response) {
@@ -110,7 +110,7 @@ angular.module("1B-Diagnostics", ['ngRoute'])
             $scope.contactFormUrl = "";
         }
 
-        $scope.deleteContact = function(contactId) {
-            Contacts.deleteContact(contactId);
+        $scope.deleteDeviceLog = function(contactId) {
+            Contacts.deleteDeviceLog(contactId);
         }
     });

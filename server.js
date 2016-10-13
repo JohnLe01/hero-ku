@@ -4,7 +4,6 @@ curl -H "Content-Type: application/json" -d '{"firstName":"Chris", "lastName": "
 */
 
 var express = require("express");
-// var path = require("path");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
 var ObjectID = mongodb.ObjectID;
@@ -12,12 +11,12 @@ var ObjectID = mongodb.ObjectID;
 var FIRSTBUILD_DIAGNOSTICS = "1B-diagnostics";
 
 var app = express();
-app.use(express.static(__dirname + "/src/view"));
+app.use(express.static(__dirname + "/src/public"));
 app.use(bodyParser.json());
 
 // Connect to the database before starting the application server.
 var database;
-mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, _database) {
+mongodb.MongoClient.connect(process.env.MONGODB_URI, function(err, _database) {
   if (err) {
     console.log(err);
     process.exit(1);
@@ -32,29 +31,26 @@ mongodb.MongoClient.connect(process.env.MONGODB_URI, function (err, _database) {
 // Generic error handler used by all endpoints.
 function handleError(res, reason, message, code) {
   console.log("ERROR: " + reason);
-  res.status(code || 500).json({"error": message});
+  res.status(code || 500).json({
+    "error": message
+  });
 }
 
-/*  "/contacts"
- *    GET: finds all contacts
- *    POST: creates a new contact
- */
-
-app.get("/contacts", function(req, res) {
+app.get("/devices", function(req, res) {
   database.collection(FIRSTBUILD_DIAGNOSTICS).find({}).toArray(function(err, docs) {
     if (err) {
-      handleError(res, err.message, "Failed to get contacts.");
+      handleError(res, err.message, "Failed to get devices.");
     } else {
       res.status(200).json(docs);
     }
   });
 });
 
-app.post("/contacts", function(req, res) {
+app.post("/devices", function(req, res) {
   var newContact = req.body;
   newContact.createDate = new Date();
 
-  console.log("Trying to POST a new contact");
+  console.log("Trying to POST a new device");
   console.log("Request");
   console.log("\n");
   console.log(newContact)
@@ -67,13 +63,13 @@ app.post("/contacts", function(req, res) {
     handleError(res, "Invalid user input", "Must provide a first or last name and email.", 400);
   }
 
-  if(req.body.email == null) {
+  if (req.body.email == null) {
     req.body.email = "blah@bleh.com";
   }
 
   database.collection(FIRSTBUILD_DIAGNOSTICS).insertOne(newContact, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to create new contact.");
+      handleError(res, err.message, "Failed to create new device.");
     } else {
       res.status(201).json(doc.ops[0]);
     }
@@ -81,15 +77,17 @@ app.post("/contacts", function(req, res) {
 });
 
 /*  "/contacts/:id"
- *    GET: find contact by id
- *    PUT: update contact by id
- *    DELETE: deletes contact by id
+ *    GET: find device by id
+ *    PUT: update device by id
+ *    DELETE: deletes device by id
  */
 
 app.get("/contacts/:id", function(req, res) {
-  database.collection(FIRSTBUILD_DIAGNOSTICS).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+  database.collection(FIRSTBUILD_DIAGNOSTICS).findOne({
+    _id: new ObjectID(req.params.id)
+  }, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to get contact");
+      handleError(res, err.message, "Failed to get device");
     } else {
       res.status(200).json(doc);
     }
@@ -100,9 +98,11 @@ app.put("/contacts/:id", function(req, res) {
   var updateDoc = req.body;
   delete updateDoc._id;
 
-  database.collection(FIRSTBUILD_DIAGNOSTICS).updateOne({_id: new ObjectID(req.params.id)}, updateDoc, function(err, doc) {
+  database.collection(FIRSTBUILD_DIAGNOSTICS).updateOne({
+    _id: new ObjectID(req.params.id)
+  }, updateDoc, function(err, doc) {
     if (err) {
-      handleError(res, err.message, "Failed to update contact");
+      handleError(res, err.message, "Failed to update device");
     } else {
       res.status(204).end();
     }
@@ -110,9 +110,11 @@ app.put("/contacts/:id", function(req, res) {
 });
 
 app.delete("/contacts/:id", function(req, res) {
-  database.collection(FIRSTBUILD_DIAGNOSTICS).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+  database.collection(FIRSTBUILD_DIAGNOSTICS).deleteOne({
+    _id: new ObjectID(req.params.id)
+  }, function(err, result) {
     if (err) {
-      handleError(res, err.message, "Failed to delete contact");
+      handleError(res, err.message, "Failed to delete device");
     } else {
       res.status(204).end();
     }

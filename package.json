@@ -9,7 +9,7 @@
   },
   "main": "server.js",
   "scripts": {
-    "test": "node_modules/.bin/jasmine-node spec",
+    "test": "node_modules/.bin/jasmine",
     "start": "node server.js"
   },
   "dependencies": {
